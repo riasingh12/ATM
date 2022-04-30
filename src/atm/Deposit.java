@@ -33,8 +33,8 @@ public class Deposit extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        DEPOSITBTN6 = new javax.swing.JButton();
-        DEPOSITBTN8 = new javax.swing.JButton();
+        DepositBtn = new javax.swing.JButton();
+        BackBtn = new javax.swing.JButton();
 
         DEPOSITBTN7.setForeground(new java.awt.Color(153, 0, 51));
         DEPOSITBTN7.setText("Logout");
@@ -85,19 +85,19 @@ public class Deposit extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 102, 204));
         jLabel6.setText("AMOUNT");
 
-        DEPOSITBTN6.setBackground(new java.awt.Color(204, 204, 204));
-        DEPOSITBTN6.setText("DEPOSIT");
-        DEPOSITBTN6.addActionListener(new java.awt.event.ActionListener() {
+        DepositBtn.setBackground(new java.awt.Color(204, 204, 204));
+        DepositBtn.setText("DEPOSIT");
+        DepositBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DEPOSITBTN6ActionPerformed(evt);
+                DepositBtnActionPerformed(evt);
             }
         });
 
-        DEPOSITBTN8.setForeground(new java.awt.Color(153, 0, 51));
-        DEPOSITBTN8.setText("Back");
-        DEPOSITBTN8.addActionListener(new java.awt.event.ActionListener() {
+        BackBtn.setForeground(new java.awt.Color(153, 0, 51));
+        BackBtn.setText("Back");
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DEPOSITBTN8ActionPerformed(evt);
+                BackBtnActionPerformed(evt);
             }
         });
 
@@ -116,9 +116,9 @@ public class Deposit extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(237, 237, 237)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DEPOSITBTN6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DepositBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(DEPOSITBTN8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,9 +132,9 @@ public class Deposit extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(73, 73, 73)
-                .addComponent(DEPOSITBTN6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DepositBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(DEPOSITBTN8)
+                .addComponent(BackBtn)
                 .addGap(17, 17, 17))
         );
 
@@ -162,17 +162,17 @@ public class Deposit extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void DEPOSITBTN6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPOSITBTN6ActionPerformed
+    private void DepositBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepositBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_DEPOSITBTN6ActionPerformed
+    }//GEN-LAST:event_DepositBtnActionPerformed
 
     private void DEPOSITBTN7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPOSITBTN7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DEPOSITBTN7ActionPerformed
 
-    private void DEPOSITBTN8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPOSITBTN8ActionPerformed
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_DEPOSITBTN8ActionPerformed
+    }//GEN-LAST:event_BackBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,9 +210,9 @@ public class Deposit extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DEPOSITBTN6;
+    private javax.swing.JButton BackBtn;
     private javax.swing.JButton DEPOSITBTN7;
-    private javax.swing.JButton DEPOSITBTN8;
+    private javax.swing.JButton DepositBtn;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;

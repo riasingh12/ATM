@@ -76,9 +76,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="DEPOSITBTN6" min="-2" pref="113" max="-2" attributes="0"/>
+                              <Component id="DepositBtn" min="-2" pref="113" max="-2" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <Component id="DEPOSITBTN8" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
+                              <Component id="BackBtn" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -98,9 +98,9 @@
                       <Component id="jTextField1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                  <Component id="DEPOSITBTN6" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="DepositBtn" min="-2" pref="44" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="DEPOSITBTN8" min="-2" max="-2" attributes="0"/>
+                  <Component id="BackBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -175,7 +175,7 @@
             <Property name="text" type="java.lang.String" value="AMOUNT"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="DEPOSITBTN6">
+        <Component class="javax.swing.JButton" name="DepositBtn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -183,10 +183,10 @@
             <Property name="text" type="java.lang.String" value="DEPOSIT"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DEPOSITBTN6ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DepositBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="DEPOSITBTN8">
+        <Component class="javax.swing.JButton" name="BackBtn">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="0" red="99" type="rgb"/>
@@ -194,7 +194,7 @@
             <Property name="text" type="java.lang.String" value="Back"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DEPOSITBTN8ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackBtnActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

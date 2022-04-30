@@ -40,18 +40,18 @@ public class Signup extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        AccNumTb = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        DEPOSITBTN7 = new javax.swing.JButton();
+        SubmitBtn = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        AccNameTb = new javax.swing.JTextField();
+        PinTb = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        Type = new javax.swing.JComboBox<>();
+        AccTypeCb = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        ContactNumTb = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -205,11 +205,16 @@ public class Signup extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 102, 204));
         jLabel9.setText("ACC TYPE");
 
-        DEPOSITBTN7.setBackground(new java.awt.Color(204, 204, 204));
-        DEPOSITBTN7.setText("SUBMIT");
-        DEPOSITBTN7.addActionListener(new java.awt.event.ActionListener() {
+        SubmitBtn.setBackground(new java.awt.Color(204, 204, 204));
+        SubmitBtn.setText("SUBMIT");
+        SubmitBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SubmitBtnMouseClicked(evt);
+            }
+        });
+        SubmitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DEPOSITBTN7ActionPerformed(evt);
+                SubmitBtnActionPerformed(evt);
             }
         });
 
@@ -225,7 +230,7 @@ public class Signup extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 102, 204));
         jLabel10.setText("ACC NUM");
 
-        Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Savings Account", "Checkings Account" }));
+        AccTypeCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Savings Account", "Checkings Account" }));
 
         jLabel14.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 102, 204));
@@ -240,7 +245,7 @@ public class Signup extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(DEPOSITBTN7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SubmitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(228, 228, 228))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -251,24 +256,24 @@ public class Signup extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(31, 31, 31)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(AccNumTb, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabel12)
                             .addGap(39, 39, 39)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(AccNameTb, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabel11)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(PinTb, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ContactNumTb, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AccTypeCb, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -280,21 +285,21 @@ public class Signup extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AccNumTb, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AccTypeCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PinTb, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ContactNumTb, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AccNameTb, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(68, 68, 68)
-                .addComponent(DEPOSITBTN7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SubmitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
@@ -325,13 +330,50 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_DEPOSITBTN6ActionPerformed
 
-    private void DEPOSITBTN7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPOSITBTN7ActionPerformed
+    private void SubmitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_DEPOSITBTN7ActionPerformed
+    }//GEN-LAST:event_SubmitBtnActionPerformed
 
     private void DEPOSITBTN8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPOSITBTN8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DEPOSITBTN8ActionPerformed
+
+    Connection Con = null;
+    PreparedStatement pst= null;
+    ResultSet Rs = null;
+    Statement St = null;
+    
+    private void Clear()
+    {
+        AccNumTb.setText("");
+        PinTb.setText("");
+        AccNameTb.setText("");
+        AccTypeCb.setText(-1);
+        ContactNumTb.setText("");
+    }
+    
+    private void SubmitBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SubmitBtnMouseClicked
+        // TODO add your handling code here:
+        if (AccNumTb.getText().isEmpty() || AccNameTb.getText().isEmpty() || AccTypeCb.getText().isEmpty() || ContactNumTb.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Missing Information");
+        }else{
+            try{
+                Con = DriveManager.getConnection("jdbc:mysql://localhost:3306/ATMDb,"root",""");
+                PreparedStatement Add = Con.prepareStatement ("Insert into AccountTbl values(?,?,?,?,?)");
+                Add.setInt(1,Integer.valueOf(AccNumTb.getText()));
+                Add.setInt(2,Integer.valueOf(PinTb.getText()));
+                Add.setString(3, AccNameTb.getText());
+                Add.setString(4, AccTypeCb.getSelectedItem().toString());
+                Add.setString(5, ContactNumTb.getText());
+                int row = Add.executeUpdate();
+                JOptionPane.showMessageDialog(this,"Account Saved");
+                Con.close();
+                Clear();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(this, e);
+            }
+        }
+    }//GEN-LAST:event_SubmitBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -369,11 +411,15 @@ public class Signup extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AccNameTb;
+    private javax.swing.JTextField AccNumTb;
+    private javax.swing.JComboBox<String> AccTypeCb;
+    private javax.swing.JTextField ContactNumTb;
     private javax.swing.JButton DEPOSITBTN5;
     private javax.swing.JButton DEPOSITBTN6;
-    private javax.swing.JButton DEPOSITBTN7;
     private javax.swing.JButton DEPOSITBTN8;
-    private javax.swing.JComboBox<String> Type;
+    private javax.swing.JTextField PinTb;
+    private javax.swing.JButton SubmitBtn;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -391,9 +437,5 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
