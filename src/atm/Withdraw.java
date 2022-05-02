@@ -4,6 +4,15 @@
  */
 package atm;
 
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author riasingh
@@ -16,7 +25,36 @@ public class Withdraw extends javax.swing.JFrame {
     public Withdraw() {
         initComponents();
     }
-
+        Connection Con = null;
+        PreparedStatement pst= null, pst1=null;
+        ResultSet Rs = null, Rs1=null;
+        Statement St = null, St1=null;
+        int oldBalance;
+        int myAccNum;
+        public Withdraw(int AccNum) {
+            initComponents();
+            myAccNum = AccNum;
+            GetBalance();
+        }
+        private void GetBalance(){
+        String query  = "select * from Account where AccNo='"+myAccNum+"'";
+            try{
+                Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ATMUser?zeroDateTimeBehavior=CONVERT_TO_NULL","root","Ironman@11");
+                St1 = Con.createStatement();
+                Rs1 = St1.executeQuery(query);
+                
+                if(Rs1.next()){
+                    oldBalance = Rs1.getInt(6);
+                    BalLbl.setText(""+oldBalance);
+                }
+                else{
+//                    JOptionPane.showMessageDialog(this, "Wrong account number or PIN");
+                }
+            }
+            catch (SQLException e){
+            
+            }
+        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,14 +66,16 @@ public class Withdraw extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        DEPOSITBTN8 = new javax.swing.JButton();
+        AmountTb = new javax.swing.JTextField();
+        BackBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         DEPOSITBTN6 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        BalLbl = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 204));
 
@@ -60,39 +100,53 @@ public class Withdraw extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        AmountTb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                AmountTbActionPerformed(evt);
             }
         });
 
-        DEPOSITBTN8.setForeground(new java.awt.Color(153, 0, 51));
-        DEPOSITBTN8.setText("Back");
-        DEPOSITBTN8.addActionListener(new java.awt.event.ActionListener() {
+        BackBtn.setForeground(new java.awt.Color(153, 0, 51));
+        BackBtn.setText("Back");
+        BackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BackBtnMouseClicked(evt);
+            }
+        });
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DEPOSITBTN8ActionPerformed(evt);
+                BackBtnActionPerformed(evt);
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 204));
         jLabel4.setText("WITHDRAW");
 
         jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 102, 204));
-        jLabel6.setText("AMOUNT");
+        jLabel6.setText("AMOUNT:");
 
         DEPOSITBTN6.setBackground(new java.awt.Color(204, 204, 204));
         DEPOSITBTN6.setText("WITHDRAW");
+        DEPOSITBTN6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DEPOSITBTN6MouseClicked(evt);
+            }
+        });
         DEPOSITBTN6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DEPOSITBTN6ActionPerformed(evt);
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 102, 204));
-        jLabel5.setText("Your Balance:");
+        BalLbl.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        BalLbl.setForeground(new java.awt.Color(0, 102, 204));
+        BalLbl.setText("Bal");
+
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel7.setText("Your Balance:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,20 +156,22 @@ public class Withdraw extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
+                        .addGap(138, 138, 138)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addComponent(AmountTb, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(237, 237, 237)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(DEPOSITBTN6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(DEPOSITBTN8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(jLabel5)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(200, 200, 200)
+                        .addComponent(jLabel7)
+                        .addGap(33, 33, 33)
+                        .addComponent(BalLbl)))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,33 +179,79 @@ public class Withdraw extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BalLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AmountTb, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
                 .addComponent(DEPOSITBTN6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(DEPOSITBTN8)
-                .addGap(17, 17, 17))
+                .addGap(18, 18, 18)
+                .addComponent(BackBtn)
+                .addGap(29, 29, 29))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void AmountTbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AmountTbActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_AmountTbActionPerformed
 
-    private void DEPOSITBTN8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPOSITBTN8ActionPerformed
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_DEPOSITBTN8ActionPerformed
+    }//GEN-LAST:event_BackBtnActionPerformed
 
     private void DEPOSITBTN6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPOSITBTN6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DEPOSITBTN6ActionPerformed
+
+    private void DEPOSITBTN6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DEPOSITBTN6MouseClicked
+        // TODO add your handling code here:
+        if(AmountTb.getText().isEmpty() || AmountTb.getText().equals(0))
+        {
+            JOptionPane.showMessageDialog(this, "Enter the valid amount");
+        }
+        else if(Integer.valueOf(AmountTb.getText()) < 0){
+            JOptionPane.showMessageDialog(this, "Enter the valid amount");
+        }
+         else if(oldBalance < Integer.valueOf(AmountTb.getText()))
+         {
+            JOptionPane.showMessageDialog(this, "Not Enough Balance");
+         }
+         else
+         {
+            try{
+                String Query = "Update account set funds = ? where AccNo = ?";
+                Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ATMUser?zeroDateTimeBehavior=CONVERT_TO_NULL","root","Ironman@11");
+                PreparedStatement ps = Con.prepareStatement(Query);
+                System.out.println(AmountTb.getText());
+                ps.setInt(1, oldBalance-Integer.valueOf(AmountTb.getText()));
+                ps.setInt(2, myAccNum);
+                if(ps.executeUpdate()==1){
+                    JOptionPane.showMessageDialog(this, "Balance has been updated");
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Missing information");
+                }
+            }
+            catch(HeadlessException | NumberFormatException | SQLException e){
+                 JOptionPane.showMessageDialog(this, e);
+            }
+        }
+         new MainMenu(myAccNum).setVisible(true);
+         this.dispose();
+    }//GEN-LAST:event_DEPOSITBTN6MouseClicked
+
+    private void BackBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackBtnMouseClicked
+        // TODO add your handling code here:
+        new MainMenu(myAccNum).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -187,13 +289,14 @@ public class Withdraw extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AmountTb;
+    private javax.swing.JButton BackBtn;
+    private javax.swing.JLabel BalLbl;
     private javax.swing.JButton DEPOSITBTN6;
-    private javax.swing.JButton DEPOSITBTN8;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
