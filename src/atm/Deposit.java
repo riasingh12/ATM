@@ -4,6 +4,12 @@
  */
 package atm;
 
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.*;
+import java.sql.DriverManager;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author riasingh
@@ -16,7 +22,38 @@ public class Deposit extends javax.swing.JFrame {
     public Deposit() {
         initComponents();
     }
+    int myAccNum;
+    public Deposit(int AccNum) {
+        initComponents();
+        myAccNum = AccNum;
+        GetBalance();
+    }
 
+        Connection Con = null;
+        PreparedStatement pst= null, pst1=null;
+        ResultSet Rs = null, Rs1=null;
+        Statement St = null, St1=null;
+        int oldBalance;
+    private void GetBalance(){
+        String query  = "select * from Account where AccNo='"+myAccNum+"'";
+            try{
+                Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ATMUser?zeroDateTimeBehavior=CONVERT_TO_NULL","root","Ironman@11");
+                St1 = Con.createStatement();
+                Rs1 = St1.executeQuery(query);
+                
+                if(Rs1.next()){
+                    oldBalance = Rs1.getInt(6);
+                    System.out.println(oldBalance);
+                    
+                }
+                else{
+//                    JOptionPane.showMessageDialog(this, "Wrong account number or PIN");
+                }
+            }
+            catch (SQLException e){
+            
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +67,7 @@ public class Deposit extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        AmountTb = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         DepositBtn = new javax.swing.JButton();
@@ -45,6 +82,7 @@ public class Deposit extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -71,22 +109,27 @@ public class Deposit extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        AmountTb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                AmountTbActionPerformed(evt);
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 204));
         jLabel4.setText("DEPOSIT");
 
         jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 102, 204));
-        jLabel6.setText("AMOUNT");
+        jLabel6.setText("AMOUNT:");
 
         DepositBtn.setBackground(new java.awt.Color(204, 204, 204));
         DepositBtn.setText("DEPOSIT");
+        DepositBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DepositBtnMouseClicked(evt);
+            }
+        });
         DepositBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DepositBtnActionPerformed(evt);
@@ -95,6 +138,11 @@ public class Deposit extends javax.swing.JFrame {
 
         BackBtn.setForeground(new java.awt.Color(153, 0, 51));
         BackBtn.setText("Back");
+        BackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BackBtnMouseClicked(evt);
+            }
+        });
         BackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackBtnActionPerformed(evt);
@@ -107,35 +155,34 @@ public class Deposit extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(237, 237, 237)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(237, 237, 237)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DepositBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(DepositBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(238, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(AmountTb, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AmountTb, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
                 .addComponent(DepositBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(BackBtn)
-                .addGap(17, 17, 17))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,11 +203,12 @@ public class Deposit extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void AmountTbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AmountTbActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_AmountTbActionPerformed
 
     private void DepositBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepositBtnActionPerformed
         // TODO add your handling code here:
@@ -173,6 +221,39 @@ public class Deposit extends javax.swing.JFrame {
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void DepositBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DepositBtnMouseClicked
+        if(AmountTb.getText().isEmpty() || AmountTb.getText().equals(0))
+        {
+            JOptionPane.showMessageDialog(this, "Enter the valid amount");
+        }
+        else{
+            try{
+                 String Query = "Update account set funds = ? where AccNo = ?";
+                 Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ATMUser?zeroDateTimeBehavior=CONVERT_TO_NULL","root","Ironman@11");
+                 PreparedStatement ps = Con.prepareStatement(Query);
+                 System.out.println(AmountTb.getText());
+                 ps.setInt(1, oldBalance+Integer.valueOf(AmountTb.getText()));
+                 ps.setInt(2, myAccNum);
+                 if(ps.executeUpdate()==1){
+                     JOptionPane.showMessageDialog(this, "Balance has been updated");
+                 }
+                 else{
+                     JOptionPane.showMessageDialog(this, "Missing information");
+                 }
+            }
+            catch(HeadlessException | NumberFormatException | SQLException e){
+                 JOptionPane.showMessageDialog(this, e);
+            }
+        }
+         new MainMenu(myAccNum).setVisible(true);
+         this.dispose();
+    }//GEN-LAST:event_DepositBtnMouseClicked
+
+    private void BackBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackBtnMouseClicked
+        new MainMenu(myAccNum).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -210,6 +291,7 @@ public class Deposit extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AmountTb;
     private javax.swing.JButton BackBtn;
     private javax.swing.JButton DEPOSITBTN7;
     private javax.swing.JButton DepositBtn;
@@ -218,6 +300,5 @@ public class Deposit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
